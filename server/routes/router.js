@@ -1,19 +1,21 @@
 const express = require('express')
-const route = express.Router()
-const {home,add_user,update_user} = require('../services/render')
-const {create,find,update,remove,single} = require('../controller/controller')
+const router = express.Router()
+const { home, add_user, update_user } = require('../services/render')
+const { create, find, update, remove, single } = require('../controller/controller')
 
-route.get('/',home)
-
-route.get('/add-user',add_user)
-
-route.get('/update-user',update_user)
+router.get('/add-user', add_user)
+router.get('/', home)
+router.get('/update-user', update_user)
 
 // API
-route.post('/api/users',create);
-route.get('/api/users',find);
-route.get('/api/users/id',single)
-route.put('/api/users/:id',update);
-route.delete('/api/users/:id',remove);
+// router.post('/api/users',create);
+// router.get('/api/users',find);
+// router.get('/api/users/id',single)
+// router.put('/api/users/:id',update);
+// router.delete('/api/users/:id',remove);
 
-module.exports = route
+router.route('/api/users').get(find).post(create);
+router.route('/api/users/:id').get(single).put(update).delete(remove);
+
+
+module.exports = router;
